@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Census Report</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Census Report</h1>
+  <table id="report-table">
+    <thead>
+      <tr>
+        <th>Family Type</th>
+        <th>Number of Members</th>
+        <th>Number of Children</th>
+        <th>Annual Income</th>
+        <th>Number of Working Members</th>
+        <th>Source of Income</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <br>
+  <button id="back-button">Back</button>
+  <script>
+    function fetchCensusData() {
+      return fetch('/generate-report-data')
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching census data:', error));
+    }
+
+    function populateTable(data) {
+      const reportTableBody = document.querySelector('#report-table tbody');
+      reportTableBody.innerHTML = '';
+
+      data.forEach(entry => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+              <td>${entry.familyType}</td>
+              <td>${entry.numMembers}</td>
+              <td>${entry.numChildren}</td>
+              <td>${entry.annualIncome}</td>
+              <td>${entry.numWorkingMembers}</td>
+              <td>${entry.sourceIncome}</td>
+            `;
+        reportTableBody.appendChild(row);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      const data = await fetchCensusData();
+      populateTable(data);
+    });
+
+    document.querySelector('#back-button').addEventListener('click', function() {
+      window.location.href = '/index.html';
+    });
+  </script>
+</body>
+</html>

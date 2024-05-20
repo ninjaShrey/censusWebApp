@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Census Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type=number], input[type=text], select {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin: 6px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button[type=submit], button[type=button] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: calc(100% - 24px);
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button[type=submit]:hover, button[type=button]:hover {
+            background-color: #337AB7;
+        }
+        .report-button {
+            background-color: #337AB7;
+        }
+    </style>
+    <script src="reportGenerator.js"></script>
+</head>
+<body>
+    <h1>Census Form</h1>
+    <div class="container">
+        <form action="/submit-census" method="POST">
+            <div class="form-group">
+                <label for="familyType">Family Type:</label>
+                <select id="familyType" name="familyType">
+                    <option value="joint">Joint Family</option>
+                    <option value="nuclear">Nuclear Family</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numMembers">Number of Members:</label>
+                <input type="number" id="numMembers" name="numMembers" min="1">
+            </div>
+            <div class="form-group">
+                <label for="numChildren">Number of Children:</label>
+                <input type="number" id="numChildren" name="numChildren" min="0">
+            </div>
+            <div class="form-group">
+                <label for="annualIncome">Annual Income:</label>
+                <input type="number" id="annualIncome" name="annualIncome" min="0">
+            </div>
+            <div class="form-group">
+                <label for="numWorkingMembers">Number of Working Members:</label>
+                <input type="number" id="numWorkingMembers" name="numWorkingMembers" min="0">
+            </div>
+            <div class="form-group">
+                <label for="sourceIncome">Source of Income:</label>
+                <select id="sourceIncome" name="sourceIncome">
+                    <option value="salary">Salary</option>
+                    <option value="business">Business</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+            <div class="form-group">
+                <button id="generate-report-btn" class="report-button" type="button">Generate Report</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const generateReportBtn = document.querySelector('#generate-report-btn');
+
+          // Event listener for Generate Report button
+          generateReportBtn.addEventListener('click', function() {
+            window.open('/generate-report', '_blank');
+          });
+        });
+    </script>
+</body>
+</html>
